@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.env
+*.venv
+env/
+venv/
+instance/
+.pytest_cache/
+*.egg-info/
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# SAM Build Artifacts
+.aws-sam/
+
+# AWS CLI credentials and config (if using local configuration)
+.aws/
+
+# Environment files
+.env
+.env.*
+
+# Local AWS credentials
+credentials
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+*$py.class
+
+# Logs and local test data
+*.log
+*.out
+*.err
+debug.log
+coverage/
+
+# VSCode settings
+.vscode/

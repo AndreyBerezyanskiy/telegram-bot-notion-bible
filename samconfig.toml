@@ -1,0 +1,35 @@
+# More information about the configuration file can be found here:
+# https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-config.html
+version = 0.1
+
+[default.global.parameters]
+stack_name = "telegram-notion-bible"
+
+[default.build.parameters]
+cached = true
+parallel = true
+
+[default.validate.parameters]
+lint = true
+
+[default.deploy.parameters]
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false
+resolve_s3 = true
+s3_prefix = "telegram-notion-bible"
+region = "eu-west-3"
+profile = "andrii"
+image_repositories = []
+parameter_overrides = "TelegramToken=\"8071441817:AAFyyAA-PwPKJ68rIY_7GewUDj7LtrnB-P8\" NotionToken=\"secret_N7TJ6fI2lz0BNMdzgy5elnF0LpWYbx0jcB46JtXw3mB\" NotionDatabaseId=\"10967bb33bbc80d5b3dbccd3941f86a8\""
+
+[default.package.parameters]
+resolve_s3 = true
+
+[default.sync.parameters]
+watch = true
+
+[default.local_start_api.parameters]
+warm_containers = "EAGER"
+
+[default.local_start_lambda.parameters]
+warm_containers = "EAGER"

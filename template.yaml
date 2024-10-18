@@ -1,0 +1,69 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  telegram-notion-bible
+
+Globals:
+  Function:
+    Timeout: 3
+    MemorySize: 128
+    LoggingConfig:
+      LogFormat: JSON
+
+Resources:
+  TelegramNotionBibleFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: app/
+      Handler: main.lambda_handler
+      Runtime: python3.9
+      Architectures:
+        - x86_64
+      Environment:
+        Variables:
+          TELEGRAM_TOKEN: !Ref TelegramToken
+          NOTION_TOKEN: !Ref NotionToken
+          NOTION_DATABASE_ID: !Ref NotionDatabaseId
+      Events:
+        TelegramBot:
+          Type: Api
+          Properties:
+            Path: /webhook
+            Method: post
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref TelegramChatIdsTable
+
+  TelegramChatIdsTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      PrimaryKey:
+        Name: chat_id
+        Type: Number
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
+Parameters:
+  TelegramToken:
+    Type: String
+    Description: "Token for Telegram bot"
+
+  NotionToken:
+    Type: String
+    Description: "Token for Notion integration"
+
+  NotionDatabaseId:
+    Type: String
+    Description: "Database ID for Notion"
+
+Outputs:
+  TelegramBotApi:
+    Description: API Gateway endpoint URL for Prod stage for Hello World function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/webhook/"
+  TelegramNotionBibleFunction:
+    Description: Hello World Lambda Function ARN
+    Value: !GetAtt TelegramNotionBibleFunction.Arn
+  TelegramNotionBibleFunctionIamRole:
+    Description: Implicit IAM Role created for Hello World function
+    Value: !GetAtt TelegramNotionBibleFunctionRole.Arn
