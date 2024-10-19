@@ -21,9 +21,8 @@ Resources:
         - x86_64
       Environment:
         Variables:
-          TELEGRAM_TOKEN: !Ref TelegramToken
-          NOTION_TOKEN: !Ref NotionToken
-          NOTION_DATABASE_ID: !Ref NotionDatabaseId
+          TABLE_NAME: !Ref TelegramChatIdsTable
+          REGION_NAME: !Ref AWS::Region
       Events:
         TelegramBot:
           Type: Api
@@ -43,19 +42,6 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
-
-Parameters:
-  TelegramToken:
-    Type: String
-    Description: "Token for Telegram bot"
-
-  NotionToken:
-    Type: String
-    Description: "Token for Notion integration"
-
-  NotionDatabaseId:
-    Type: String
-    Description: "Database ID for Notion"
 
 Outputs:
   TelegramBotApi:
