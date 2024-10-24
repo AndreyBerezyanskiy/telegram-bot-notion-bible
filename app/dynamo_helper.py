@@ -1,4 +1,5 @@
 # dynamo_helper.py
+from decimal import Decimal
 import boto3
 import os
 from botocore.exceptions import ClientError
@@ -32,7 +33,8 @@ def get_all_chat_ids():
     """Retrieve all chat_ids from the DynamoDB table"""
     try:
         response = table.scan()
-        chat_ids = [item['chat_id'] for item in response['Items']]
+        # Convert chat_id to int if it's a Decimal
+        chat_ids = [int(item['chat_id']) if isinstance(item['chat_id'], Decimal) else item['chat_id'] for item in response['Items']]
         return chat_ids
     except ClientError as e:
         print(f"Error retrieving chat_ids from DynamoDB: {e}")
