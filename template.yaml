@@ -32,6 +32,14 @@ Resources:
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref TelegramChatIdsTable
+        - Statement:
+            Effect: Allow
+            Action:
+              - "ssm:GetParametersByPath"
+              - "ssm:GetParameters"
+              - "ssm:GetParameter"
+            Resource:
+              - !Sub "arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/telegram-notion-bible/*"
 
   TelegramChatIdsTable:
     Type: AWS::Serverless::SimpleTable
@@ -47,7 +55,7 @@ Resources:
     Type: AWS::Scheduler::Schedule
     Properties:
       Name: 'NotionBibleReminder'
-      ScheduleExpression: 'rate(1 minute)'
+      ScheduleExpression: cron(0 21 * * ? *)
       FlexibleTimeWindow:
         Mode: 'OFF'
       Target:
