@@ -10,7 +10,7 @@ def lambda_handler(event, context):
         case {'httpMethod': "POST", 'path': '/webhook'}:
             log(log.INFO, "Event from webhook: [%s]", event)
             return asyncio.get_event_loop().run_until_complete(handle_webhook(event))
-        case {'source': 'aws.schedule'}:
+        case {'source': 'aws.scheduler'}:
             log(log.INFO, "Event from schedule: [%s]", event)
             return asyncio.get_event_loop().run_until_complete(handle_schedule(event))
         case _:

@@ -29,7 +29,7 @@ def add_chat_id(chat_id: str):
         else:
             log(log.INFO, "something went wrong, error:", e)
 
-def get_all_chat_ids():
+async def get_all_chat_ids():
     """Retrieve all chat_ids from the DynamoDB table"""
     try:
         response = table.scan()
