@@ -1,16 +1,13 @@
 import os
 import requests
 from config import notion_db_id_ssm, notion_token_ssm
+from loggger import log
 
-# NOTION_TOKEN = os.getenv('NOTION_TOKEN')
-# NOTION_DATABASE_ID = os.getenv('NOTION_DATABASE_ID')
 
 def create_notion_task(task_description, task_verse):
     """Function to create new task in database"""
     url = "https://api.notion.com/v1/pages"
 
-    print("token", notion_token_ssm)
-    print("db", notion_db_id_ssm)
     headers = {
         "Authorization": f"Bearer {notion_token_ssm}",
         "Content-Type": "application/json",
@@ -46,7 +43,7 @@ def create_notion_task(task_description, task_verse):
 
     response = requests.post(url, headers=headers, json=data)
 
-    print("response====", response.text)
+    log(log.INFO, "response====", response.text)
 
     if response.status_code == 200:
         return True
